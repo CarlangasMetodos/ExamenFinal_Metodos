@@ -6,5 +6,10 @@ import numpy as np
 x = np.int_(np.random.random(100)*1000)
 print(x)
 
-
+num=0
+for i in range (len(x)):
+    num=x[i]
+    if(num%2!=0 and num<800):
+        print (num)
+    
 

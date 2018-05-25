@@ -10,7 +10,7 @@ import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-
+from scipy.fftpack import fft, fftfreq
 
 n = 512 # number of point in the whole interval
 f = 200.0 #  frequency in Hz
@@ -26,10 +26,26 @@ plt.plot(y,t)
 plt.savefig('senal.png')
 
 #b
-lista=[]
-e=np.exp(-n*t*f)
-fourier=np.norm(np.sum(y*e))
+fourier=[]
+
+def fourier(y):
+    for i in range(N):
+        e=np.exp(2.0*np.pi*t*i*n/N)
+        fourier.append(np.sum(y[i]*e))
+        
+    return fourier
+
+norm_f=fft(fourier(y))/n
 
 plt.figure()
-plt.plot()
+plt.plot(norm_f,t)
+plt.savefig('fourier.png')
 
+#c
+for i in range(len(fourier)):
+   if(fourier[i]>=10000):
+        fourier[i]=0
+
+plt.figure()
+plt.plot(fourier,t)
+plt.savefig('filtro.png')
